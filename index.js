@@ -1,5 +1,6 @@
 var express = require('express');
 var cors = require('cors');
+const bodyParser = require('body-parser');
 require('dotenv').config()
 
 var app = express();
@@ -11,6 +12,13 @@ app.get('/', function (req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
+
+app.post('/api/fileanalyse', function(req, res) {
+  let file = req.body.upfile;
+  
+  console.log(file);
+  // res.json({file: upfile});
+});
 
 
 

@@ -1,23 +1,31 @@
 var express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
+const multer = require('multer');
 require('dotenv').config()
 
 var app = express();
 
 app.use(cors());
 app.use('/public', express.static(process.cwd() + '/public'));
+const upload = multer({dest: "./public/data/uploads"});
 
 app.get('/', function (req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
-
-app.post('/api/fileanalyse', function(req, res) {
-  let file = req.body.upfile;
+app.post('/api/fileanalyse', upload.single("upfile"),function(req, res) {
+  const {originalname, mimetype, size} = req.file
+  req.file.originalname;
+  req.file.size;
+  req.file.mimetype;
+  res.json({
+    name: originalname,
+    type: mimetype,
+    size: size
+  }
+  );
   
-  console.log(file);
-  // res.json({file: upfile});
 });
 
 
